@@ -128,7 +128,7 @@ export default function RoutinesPage() {
     <div className="flex flex-col min-h-screen">
       <Header title="Rutinas" subtitle="Programas de ejercicio adaptados para oficinistas" />
 
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-4 lg:p-6">
         <div className="flex gap-2 mb-6 bg-white border border-gray-200 rounded-xl p-1.5 w-fit shadow-sm">
           <button
             onClick={() => setTab("hogar")}

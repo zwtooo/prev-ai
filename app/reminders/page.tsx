@@ -88,7 +88,7 @@ export default function RemindersPage() {
     <div className="flex flex-col min-h-screen">
       <Header title="Recordatorios" subtitle="Mantén tus hábitos saludables con alertas programadas" />
 
-      <main className="flex-1 p-6">
+      <main className="flex-1 p-4 lg:p-6">
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[

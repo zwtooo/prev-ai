@@ -124,7 +124,7 @@ export default function ChatInterface() {
   const isOnlyWelcome = messages.length === 1 && messages[0].id === "0";
 
   return (
-    <div className="flex flex-col h-[calc(100vh-73px)]">
+    <div className="flex flex-col h-[calc(100vh-73px-64px)] lg:h-[calc(100vh-73px)]">
       {/* Chat Header */}
       <div className="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between">
         <div className="flex items-center gap-3">

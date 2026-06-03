@@ -76,7 +76,7 @@ export default async function StatsPage() {
     <div className="flex flex-col min-h-screen">
       <Header title="Estadísticas" subtitle="Tu progreso y rendimiento a lo largo del tiempo" />
 
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-4 lg:p-6 space-y-4 lg:space-y-6">
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { icon: Flame, label: "Racha", value: profile?.streak || 0, sub: "días consecutivos" },

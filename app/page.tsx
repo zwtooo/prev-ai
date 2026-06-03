@@ -55,7 +55,7 @@ export default async function DashboardPage() {
     <div className="flex flex-col min-h-screen">
       <Header title="Dashboard" subtitle={`Bienvenido de vuelta, ${firstName}. Aquí está tu resumen de hoy.`} />
 
-      <main className="flex-1 p-6 space-y-6">
+      <main className="flex-1 p-4 lg:p-6 space-y-4 lg:space-y-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
           <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
