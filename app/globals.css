@@ -60,3 +60,8 @@ body {
 html, body {
   overflow-x: hidden;
 }
+
+/* Mobile content padding accounts for bottom nav + safe area inset */
+.mobile-safe-pb {
+  padding-bottom: calc(4rem + env(safe-area-inset-bottom, 0px));
+}

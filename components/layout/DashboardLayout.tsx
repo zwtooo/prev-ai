@@ -15,7 +15,7 @@ export default function DashboardLayout({ children, userName, userEmail }: Dashb
     <SidebarProvider>
       <Sidebar userName={userName} userEmail={userEmail} />
       <div className="flex-1 flex flex-col min-h-screen overflow-hidden lg:ml-64">
-        <div className="flex-1 flex flex-col pb-16 lg:pb-0">
+        <div className="flex-1 flex flex-col mobile-safe-pb lg:pb-0 min-h-0">
           {children}
         </div>
       </div>
