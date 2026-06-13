@@ -54,13 +54,13 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
       )}
 
       <aside className={`
-        fixed left-0 top-0 h-screen w-64 bg-gray-900 flex flex-col z-50
+        fixed left-0 top-0 h-screen w-64 bg-[#0f172a] flex flex-col z-50
         transition-transform duration-300 ease-in-out
         ${isOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0
       `}>
         {/* Logo + close button on mobile */}
-        <div className="px-6 py-6 border-b border-gray-800 flex items-center justify-between">
+        <div className="px-6 py-6 border-b border-white/10 flex items-center justify-between">
           <div>
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
@@ -74,7 +74,7 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
           </div>
           <button
             onClick={close}
-            className="lg:hidden text-gray-500 hover:text-white p-1 rounded-lg hover:bg-gray-800 transition-colors"
+            className="lg:hidden text-gray-500 hover:text-white p-1 rounded-lg hover:bg-white/10 transition-colors"
           >
             <X size={18} />
           </button>
@@ -95,7 +95,7 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150 ${
                   active
                     ? "bg-orange-500 text-white shadow-lg shadow-orange-500/20"
-                    : "text-gray-400 hover:text-white hover:bg-gray-800"
+                    : "text-gray-400 hover:text-white hover:bg-white/10"
                 }`}
               >
                 <Icon size={18} />
@@ -111,18 +111,18 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
         </nav>
 
         {/* Bottom */}
-        <div className="px-3 py-4 border-t border-gray-800 space-y-1">
+        <div className="px-3 py-4 border-t border-white/10 space-y-1">
           <Link
             href="/settings"
             onClick={handleNavClick}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-gray-800 transition-all duration-150"
+            className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-white hover:bg-white/10 transition-all duration-150"
           >
             <Settings size={18} />
             Configuración
           </Link>
           <button
             onClick={handleLogout}
-            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-gray-800 transition-all duration-150"
+            className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-400 hover:text-red-400 hover:bg-white/10 transition-all duration-150"
           >
             <LogOut size={18} />
             Cerrar sesión
@@ -130,7 +130,7 @@ export default function Sidebar({ userName, userEmail }: SidebarProps) {
         </div>
 
         {/* User */}
-        <div className="px-4 py-4 border-t border-gray-800">
+        <div className="px-4 py-4 border-t border-white/10">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center text-white text-xs font-bold shrink-0">
               {initials}
