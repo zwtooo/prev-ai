@@ -7,7 +7,7 @@ import { Clock, ChevronDown, ChevronUp, Dumbbell, Home, Zap, BarChart2, CheckCir
 import { createClient } from "@/lib/supabase/client";
 
 const levelColors: Record<string, string> = {
-  Principiante: "bg-green-100 text-green-700",
+  Principiante: "bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400",
   Intermedio: "bg-orange-100 text-orange-700",
   Avanzado: "bg-red-100 text-red-700",
 };
@@ -49,25 +49,25 @@ function RoutineCard({ routine }: { routine: typeof homeRoutines[0] }) {
   };
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="bg-white dark:bg-[#0f172a] rounded-xl border border-gray-200 dark:border-slate-700 shadow-sm overflow-hidden">
       <div className="p-5">
         <div className="flex items-start justify-between gap-3 mb-3">
           <div>
-            <h3 className="text-gray-900 font-semibold text-base">{routine.title}</h3>
-            <p className="text-gray-500 text-sm mt-0.5">{routine.description}</p>
+            <h3 className="text-gray-900 dark:text-white font-semibold text-base">{routine.title}</h3>
+            <p className="text-gray-500 dark:text-gray-400 text-sm mt-0.5">{routine.description}</p>
           </div>
-          <span className={`text-xs font-medium px-2 py-1 rounded-lg whitespace-nowrap ${levelColors[routine.level] || "bg-gray-100 text-gray-600"}`}>
+          <span className={`text-xs font-medium px-2 py-1 rounded-lg whitespace-nowrap ${levelColors[routine.level] || "bg-gray-100 dark:bg-white/10 text-gray-600 dark:text-gray-300"}`}>
             {routine.level}
           </span>
         </div>
 
         <div className="flex items-center gap-4 mb-4">
-          <div className="flex items-center gap-1.5 text-gray-500 text-sm">
-            <Clock size={14} className="text-orange-500" />
+          <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 text-sm">
+            <Clock size={14} className="text-green-600 dark:text-green-400" />
             <span>{routine.duration}</span>
           </div>
-          <div className="flex items-center gap-1.5 text-gray-500 text-sm">
-            <BarChart2 size={14} className="text-orange-500" />
+          <div className="flex items-center gap-1.5 text-gray-500 dark:text-gray-400 text-sm">
+            <BarChart2 size={14} className="text-green-600 dark:text-green-400" />
             <span>{routine.exercises.length} ejercicios</span>
           </div>
         </div>
@@ -77,7 +77,7 @@ function RoutineCard({ routine }: { routine: typeof homeRoutines[0] }) {
             onClick={handleStart}
             disabled={starting || done}
             className={`flex-1 text-white text-sm font-medium py-2 rounded-lg flex items-center justify-center gap-2 transition-colors ${
-              done ? "bg-green-500" : "bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300"
+              done ? "bg-green-500" : "bg-green-600 hover:bg-green-700 disabled:bg-green-300"
             }`}
           >
             {starting ? (
@@ -90,7 +90,7 @@ function RoutineCard({ routine }: { routine: typeof homeRoutines[0] }) {
           </button>
           <button
             onClick={() => setExpanded(!expanded)}
-            className="px-3 py-2 border border-gray-200 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-50 transition-colors"
+            className="px-3 py-2 border border-gray-200 dark:border-slate-700 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-50 dark:hover:bg-white/5 transition-colors"
           >
             {expanded ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
           </button>
@@ -98,18 +98,18 @@ function RoutineCard({ routine }: { routine: typeof homeRoutines[0] }) {
       </div>
 
       {expanded && (
-        <div className="border-t border-gray-100 px-5 py-4 bg-gray-50">
-          <p className="text-gray-500 text-xs font-semibold uppercase tracking-wider mb-3">Ejercicios</p>
+        <div className="border-t border-gray-100 dark:border-slate-800 px-5 py-4 bg-gray-50 dark:bg-white/5">
+          <p className="text-gray-500 dark:text-gray-400 text-xs font-semibold uppercase tracking-wider mb-3">Ejercicios</p>
           <div className="space-y-2.5">
             {routine.exercises.map((ex, i) => (
-              <div key={i} className="flex items-center gap-3 bg-white border border-gray-100 rounded-lg p-3">
+              <div key={i} className="flex items-center gap-3 bg-white dark:bg-[#0f172a] border border-gray-100 dark:border-slate-800 rounded-lg p-3">
                 <span className="text-lg w-7 text-center">{ex.icon}</span>
                 <div className="flex-1">
-                  <p className="text-gray-800 text-sm font-medium">{ex.name}</p>
+                  <p className="text-gray-800 dark:text-gray-100 text-sm font-medium">{ex.name}</p>
                 </div>
                 <div className="text-right">
-                  <p className="text-orange-600 text-xs font-semibold">{ex.sets} serie{ex.sets > 1 ? "s" : ""}</p>
-                  <p className="text-gray-400 text-xs">{ex.reps}</p>
+                  <p className="text-green-700 dark:text-green-400 text-xs font-semibold">{ex.sets} serie{ex.sets > 1 ? "s" : ""}</p>
+                  <p className="text-gray-400 dark:text-gray-500 text-xs">{ex.reps}</p>
                 </div>
               </div>
             ))}
@@ -129,29 +129,29 @@ export default function RoutinesPage() {
       <Header title="Rutinas" subtitle="Programas de ejercicio adaptados para oficinistas" />
 
       <main className="flex-1 p-4 lg:p-6">
-        <div className="flex gap-2 mb-6 bg-white border border-gray-200 rounded-xl p-1.5 w-fit shadow-sm">
+        <div className="flex gap-2 mb-6 bg-white dark:bg-[#0f172a] border border-gray-200 dark:border-slate-700 rounded-xl p-1.5 w-fit shadow-sm">
           <button
             onClick={() => setTab("hogar")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === "hogar" ? "bg-orange-500 text-white shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === "hogar" ? "bg-green-600 text-white shadow-sm" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white"}`}
           >
             <Home size={16} /> En casa
           </button>
           <button
             onClick={() => setTab("gimnasio")}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === "gimnasio" ? "bg-orange-500 text-white shadow-sm" : "text-gray-500 hover:text-gray-700"}`}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium transition-all ${tab === "gimnasio" ? "bg-green-600 text-white shadow-sm" : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white"}`}
           >
             <Dumbbell size={16} /> Gimnasio
           </button>
         </div>
 
-        <div className={`rounded-xl p-4 mb-6 border ${tab === "hogar" ? "bg-orange-50 border-orange-100" : "bg-gray-900 border-gray-800"}`}>
+        <div className={`rounded-xl p-4 mb-6 border ${tab === "hogar" ? "bg-green-50 dark:bg-green-500/10 border-green-100" : "bg-gray-900 border-gray-800"}`}>
           <div className="flex items-center gap-3">
             <span className="text-2xl">{tab === "hogar" ? "🏠" : "🏋️"}</span>
             <div>
-              <h3 className={`font-semibold ${tab === "hogar" ? "text-gray-900" : "text-white"}`}>
+              <h3 className={`font-semibold ${tab === "hogar" ? "text-gray-900 dark:text-white" : "text-white"}`}>
                 {tab === "hogar" ? "Rutinas en casa" : "Rutinas de gimnasio"}
               </h3>
-              <p className={`text-sm ${tab === "hogar" ? "text-gray-600" : "text-gray-400"}`}>
+              <p className={`text-sm ${tab === "hogar" ? "text-gray-600 dark:text-gray-300" : "text-gray-400 dark:text-gray-500"}`}>
                 {tab === "hogar"
                   ? "Sin equipamiento. Al pulsar Comenzar, la sesión queda registrada en tus estadísticas."
                   : "Diseñadas para corregir desequilibrios musculares por trabajo sedentario."}

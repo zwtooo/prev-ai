@@ -13,7 +13,7 @@ const DAY_LABELS = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
 const colorMap: Record<string, { bg: string; text: string }> = {
   orange: { bg: "bg-orange-100", text: "text-orange-600" },
   blue: { bg: "bg-blue-100", text: "text-blue-600" },
-  green: { bg: "bg-green-100", text: "text-green-600" },
+  green: { bg: "bg-green-100 dark:bg-green-500/15", text: "text-green-600 dark:text-green-400" },
   purple: { bg: "bg-purple-100", text: "text-purple-600" },
   indigo: { bg: "bg-indigo-100", text: "text-indigo-600" },
 };
@@ -45,6 +45,8 @@ export default function RemindersPage() {
     setLoading(false);
   }, [supabase]);
 
+  // Intentional one-time reminders fetch on mount; setState happens after async I/O.
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchReminders(); }, [fetchReminders]);
 
   const toggleReminder = async (id: string, active: boolean) => {
@@ -92,22 +94,22 @@ export default function RemindersPage() {
         {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { label: "Total", value: reminders.length, color: "text-gray-900" },
-            { label: "Activos", value: activeCount, color: "text-green-600" },
-            { label: "Inactivos", value: reminders.length - activeCount, color: "text-gray-400" },
+            { label: "Total", value: reminders.length, color: "text-gray-900 dark:text-white" },
+            { label: "Activos", value: activeCount, color: "text-green-600 dark:text-green-400" },
+            { label: "Inactivos", value: reminders.length - activeCount, color: "text-gray-400 dark:text-gray-500" },
           ].map((s) => (
-            <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm text-center">
+            <div key={s.label} className="bg-white dark:bg-[#0f172a] rounded-xl border border-gray-200 dark:border-slate-700 p-4 shadow-sm text-center">
               <p className={`text-3xl font-bold ${s.color}`}>{s.value}</p>
-              <p className="text-gray-500 text-sm mt-1">{s.label}</p>
+              <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">{s.label}</p>
             </div>
           ))}
         </div>
 
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-gray-900 font-semibold">Mis recordatorios</h2>
+          <h2 className="text-gray-900 dark:text-white font-semibold">Mis recordatorios</h2>
           <button
             onClick={() => setShowModal(true)}
-            className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
+            className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors"
           >
             <Plus size={16} /> Nuevo recordatorio
           </button>
@@ -115,7 +117,7 @@ export default function RemindersPage() {
 
         {loading ? (
           <div className="flex items-center justify-center py-20">
-            <Loader2 size={28} className="text-orange-500 animate-spin" />
+            <Loader2 size={28} className="text-green-600 dark:text-green-400 animate-spin" />
           </div>
         ) : (
           <div className="space-y-3">
@@ -124,8 +126,8 @@ export default function RemindersPage() {
               return (
                 <div
                   key={reminder.id}
-                  className={`bg-white rounded-xl border p-4 shadow-sm flex items-center gap-4 transition-all ${
-                    reminder.active ? "border-gray-200" : "border-gray-100 opacity-60"
+                  className={`bg-white dark:bg-[#0f172a] rounded-xl border p-4 shadow-sm flex items-center gap-4 transition-all ${
+                    reminder.active ? "border-gray-200 dark:border-slate-700" : "border-gray-100 dark:border-slate-800 opacity-60"
                   }`}
                 >
                   <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-lg ${c.bg}`}>
@@ -133,20 +135,20 @@ export default function RemindersPage() {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 flex-wrap">
-                      <p className="text-gray-900 font-medium text-sm">{reminder.title}</p>
+                      <p className="text-gray-900 dark:text-white font-medium text-sm">{reminder.title}</p>
                       <span className={`text-xs px-2 py-0.5 rounded-full font-medium ${c.bg} ${c.text}`}>
                         {reminder.time}
                       </span>
                     </div>
-                    <p className="text-gray-400 text-xs mt-0.5">{reminder.description}</p>
+                    <p className="text-gray-400 dark:text-gray-500 text-xs mt-0.5">{reminder.description}</p>
                     <div className="flex gap-1 mt-2">
                       {DAY_LABELS.map((day) => (
                         <span
                           key={day}
                           className={`text-xs px-1.5 py-0.5 rounded font-medium ${
                             reminder.days.includes(day)
-                              ? "bg-orange-100 text-orange-600"
-                              : "bg-gray-100 text-gray-300"
+                              ? "bg-green-100 dark:bg-green-500/15 text-green-700 dark:text-green-400"
+                              : "bg-gray-100 dark:bg-white/10 text-gray-300 dark:text-gray-600"
                           }`}
                         >
                           {day}
@@ -155,10 +157,10 @@ export default function RemindersPage() {
                     </div>
                   </div>
                   <div className="flex items-center gap-2 shrink-0">
-                    <button onClick={() => toggleReminder(reminder.id, reminder.active)} className="text-gray-400 hover:text-orange-500 transition-colors">
-                      {reminder.active ? <ToggleRight size={28} className="text-orange-500" /> : <ToggleLeft size={28} />}
+                    <button onClick={() => toggleReminder(reminder.id, reminder.active)} className="text-gray-400 dark:text-gray-500 hover:text-green-600 transition-colors">
+                      {reminder.active ? <ToggleRight size={28} className="text-green-600 dark:text-green-400" /> : <ToggleLeft size={28} />}
                     </button>
-                    <button onClick={() => deleteReminder(reminder.id)} className="p-1.5 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
+                    <button onClick={() => deleteReminder(reminder.id)} className="p-1.5 text-gray-300 dark:text-gray-600 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors">
                       <Trash2 size={15} />
                     </button>
                   </div>
@@ -169,8 +171,8 @@ export default function RemindersPage() {
             {reminders.length === 0 && (
               <div className="text-center py-16">
                 <Bell size={40} className="text-gray-200 mx-auto mb-3" />
-                <p className="text-gray-500 font-medium">No tienes recordatorios</p>
-                <p className="text-gray-400 text-sm mt-1">Crea uno para mantener tus hábitos saludables</p>
+                <p className="text-gray-500 dark:text-gray-400 font-medium">No tienes recordatorios</p>
+                <p className="text-gray-400 dark:text-gray-500 text-sm mt-1">Crea uno para mantener tus hábitos saludables</p>
               </div>
             )}
           </div>
@@ -179,51 +181,51 @@ export default function RemindersPage() {
 
       {showModal && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl shadow-xl w-full max-w-md p-6">
-            <h3 className="text-gray-900 font-bold text-lg mb-5">Nuevo recordatorio</h3>
+          <div className="bg-white dark:bg-[#0f172a] rounded-2xl shadow-xl w-full max-w-md p-6">
+            <h3 className="text-gray-900 dark:text-white font-bold text-lg mb-5">Nuevo recordatorio</h3>
             <div className="space-y-4">
               <div>
-                <label className="text-gray-700 text-sm font-medium block mb-1.5">Título</label>
+                <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Título</label>
                 <input type="text" value={newReminder.title} onChange={(e) => setNewReminder((p) => ({ ...p, title: e.target.value }))}
                   placeholder="Ej: Pausa activa"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500" />
+                  className="w-full px-3 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600" />
               </div>
               <div>
-                <label className="text-gray-700 text-sm font-medium block mb-1.5">Descripción</label>
+                <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Descripción</label>
                 <input type="text" value={newReminder.description} onChange={(e) => setNewReminder((p) => ({ ...p, description: e.target.value }))}
                   placeholder="Descripción breve"
-                  className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500" />
+                  className="w-full px-3 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600" />
               </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="text-gray-700 text-sm font-medium block mb-1.5">Hora</label>
+                  <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Hora</label>
                   <input type="time" value={newReminder.time} onChange={(e) => setNewReminder((p) => ({ ...p, time: e.target.value }))}
-                    className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500" />
+                    className="w-full px-3 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600" />
                 </div>
                 <div>
-                  <label className="text-gray-700 text-sm font-medium block mb-1.5">Icono</label>
+                  <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Icono</label>
                   <input type="text" value={newReminder.icon} onChange={(e) => setNewReminder((p) => ({ ...p, icon: e.target.value }))}
-                    className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500" />
+                    className="w-full px-3 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600" />
                 </div>
               </div>
               <div>
-                <label className="text-gray-700 text-sm font-medium block mb-2">Color</label>
+                <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-2">Color</label>
                 <div className="flex gap-2">
                   {Object.keys(colorMap).map((c) => (
                     <button key={c} type="button" onClick={() => setNewReminder((p) => ({ ...p, color: c }))}
-                      className={`flex-1 py-1.5 rounded-lg text-xs font-medium border-2 transition-all ${newReminder.color === c ? "border-orange-500 " + colorMap[c].bg : "border-transparent " + colorMap[c].bg}`}>
+                      className={`flex-1 py-1.5 rounded-lg text-xs font-medium border-2 transition-all ${newReminder.color === c ? "border-green-600 " + colorMap[c].bg : "border-transparent " + colorMap[c].bg}`}>
                       {c}
                     </button>
                   ))}
                 </div>
               </div>
               <div>
-                <label className="text-gray-700 text-sm font-medium block mb-2">Días</label>
+                <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-2">Días</label>
                 <div className="flex gap-1.5">
                   {DAY_LABELS.map((day) => (
                     <button key={day} type="button" onClick={() => toggleDay(day)}
                       className={`flex-1 py-2 rounded-lg text-xs font-medium transition-all ${
-                        newReminder.days.includes(day) ? "bg-orange-500 text-white" : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                        newReminder.days.includes(day) ? "bg-green-600 text-white" : "bg-gray-100 dark:bg-white/10 text-gray-500 dark:text-gray-400 hover:bg-gray-200 dark:hover:bg-white/10"
                       }`}>
                       {day}
                     </button>
@@ -232,11 +234,11 @@ export default function RemindersPage() {
               </div>
             </div>
             <div className="flex gap-3 mt-6">
-              <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-200 rounded-lg text-gray-600 text-sm font-medium hover:bg-gray-50 transition-colors">
+              <button onClick={() => setShowModal(false)} className="flex-1 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-gray-600 dark:text-gray-300 text-sm font-medium hover:bg-gray-50 dark:hover:bg-white/5 transition-colors">
                 Cancelar
               </button>
               <button onClick={addReminder} disabled={!newReminder.title.trim() || newReminder.days.length === 0 || saving}
-                className="flex-1 py-2.5 bg-orange-500 hover:bg-orange-600 disabled:bg-gray-200 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
+                className="flex-1 py-2.5 bg-green-600 hover:bg-green-700 disabled:bg-gray-200 dark:disabled:bg-white/10 disabled:cursor-not-allowed text-white text-sm font-medium rounded-lg transition-colors flex items-center justify-center gap-2">
                 {saving ? <><Loader2 size={14} className="animate-spin" /> Guardando...</> : "Crear recordatorio"}
               </button>
             </div>

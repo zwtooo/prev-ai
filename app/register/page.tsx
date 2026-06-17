@@ -80,16 +80,16 @@ export default function RegisterPage() {
 
   if (success) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-        <div className="w-full max-w-md bg-white rounded-2xl border border-gray-200 p-8 text-center shadow-sm">
-          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+      <div className="min-h-screen bg-gray-50 dark:bg-white/5 flex items-center justify-center p-4">
+        <div className="w-full max-w-md bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-200 dark:border-slate-700 p-8 text-center shadow-sm">
+          <div className="w-16 h-16 bg-green-100 dark:bg-green-500/15 rounded-full flex items-center justify-center mx-auto mb-4">
             <CheckCircle2 size={32} className="text-green-500" />
           </div>
-          <h2 className="text-gray-900 font-bold text-xl mb-2">¡Cuenta creada!</h2>
-          <p className="text-gray-500 text-sm mb-5">
+          <h2 className="text-gray-900 dark:text-white font-bold text-xl mb-2">¡Cuenta creada!</h2>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-5">
             Revisa tu correo <strong>{email}</strong> y confirma tu cuenta para continuar.
           </p>
-          <Link href="/login" className="text-orange-500 font-medium hover:text-orange-600 text-sm">
+          <Link href="/login" className="text-green-600 dark:text-green-400 font-medium hover:text-green-700 text-sm">
             Ir al inicio de sesión
           </Link>
         </div>
@@ -98,20 +98,20 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gray-50 dark:bg-white/5 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="flex items-center justify-center gap-2 mb-8">
-          <div className="w-10 h-10 bg-orange-500 rounded-xl flex items-center justify-center shadow-lg shadow-orange-500/30">
+          <div className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center shadow-lg shadow-green-600/30">
             <Zap size={20} className="text-white" />
           </div>
-          <span className="text-gray-900 font-bold text-2xl">
-            prev<span className="text-orange-500">.ai</span>
+          <span className="text-gray-900 dark:text-white font-bold text-2xl">
+            prev<span className="text-green-600 dark:text-green-400">.ai</span>
           </span>
         </div>
 
-        <div className="bg-white rounded-2xl border border-gray-200 shadow-sm p-8">
-          <h1 className="text-gray-900 font-bold text-2xl mb-1">Crea tu cuenta</h1>
-          <p className="text-gray-500 text-sm mb-6">Empieza a cuidar tu salud hoy</p>
+        <div className="bg-white dark:bg-[#0f172a] rounded-2xl border border-gray-200 dark:border-slate-700 shadow-sm p-8">
+          <h1 className="text-gray-900 dark:text-white font-bold text-2xl mb-1">Crea tu cuenta</h1>
+          <p className="text-gray-500 dark:text-gray-400 text-sm mb-6">Empieza a cuidar tu salud hoy</p>
 
           {error && (
             <div className="flex items-center gap-2 bg-red-50 border border-red-200 text-red-600 text-sm rounded-lg px-4 py-3 mb-5">
@@ -122,46 +122,46 @@ export default function RegisterPage() {
 
           <form onSubmit={handleRegister} className="space-y-4">
             <div>
-              <label className="text-gray-700 text-sm font-medium block mb-1.5">Nombre completo</label>
+              <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Nombre completo</label>
               <div className="relative">
-                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                 <input
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Tu nombre"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-700 text-sm font-medium block mb-1.5">Correo electrónico</label>
+              <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Correo electrónico</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                 <input
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="tu@correo.com"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600"
                 />
               </div>
             </div>
 
             <div>
-              <label className="text-gray-700 text-sm font-medium block mb-1.5">Contraseña</label>
+              <label className="text-gray-700 dark:text-gray-200 text-sm font-medium block mb-1.5">Contraseña</label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500" />
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Mínimo 6 caracteres"
                   required
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500/30 focus:border-orange-500"
+                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 dark:border-slate-700 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-green-600/30 focus:border-green-600"
                 />
               </div>
             </div>
@@ -169,15 +169,15 @@ export default function RegisterPage() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-orange-500 hover:bg-orange-600 disabled:bg-orange-300 text-white font-semibold py-2.5 rounded-lg transition-colors"
+              className="w-full bg-green-600 hover:bg-green-700 disabled:bg-green-300 text-white font-semibold py-2.5 rounded-lg transition-colors"
             >
               {loading ? "Creando cuenta..." : "Crear cuenta"}
             </button>
           </form>
 
-          <p className="text-center text-gray-500 text-sm mt-5">
+          <p className="text-center text-gray-500 dark:text-gray-400 text-sm mt-5">
             ¿Ya tienes cuenta?{" "}
-            <Link href="/login" className="text-orange-500 font-medium hover:text-orange-600">
+            <Link href="/login" className="text-green-600 dark:text-green-400 font-medium hover:text-green-700">
               Inicia sesión
             </Link>
           </p>

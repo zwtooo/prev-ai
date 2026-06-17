@@ -1,16 +1,31 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  --background: #F9FAFB;
+  --background: #F0F4F8;
   --foreground: #111827;
-  --sidebar-bg: #111827;
-  --sidebar-text: #F9FAFB;
+  --sidebar-bg: #ffffff;
+  --sidebar-text: #111827;
   --card-bg: #ffffff;
   --border: #E5E7EB;
-  --primary: #F97316;
-  --primary-hover: #EA580C;
-  --primary-light: #FFF7ED;
+  --primary: #16A34A;
+  --primary-hover: #15803D;
+  --primary-light: #F0FDF4;
   --muted: #6B7280;
+}
+
+.dark {
+  --background: #0b1120;
+  --foreground: #E5E7EB;
+  --sidebar-bg: #0f172a;
+  --sidebar-text: #E5E7EB;
+  --card-bg: #0f172a;
+  --border: #1e293b;
+  --primary: #22C55E;
+  --primary-hover: #16A34A;
+  --primary-light: #0f2a1a;
+  --muted: #94A3B8;
 }
 
 @theme inline {
@@ -25,6 +40,13 @@
   --color-muted: var(--muted);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+}
+
+html {
+  color-scheme: light;
+}
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -49,6 +71,15 @@ body {
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #9CA3AF;
+}
+.dark ::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 /* Safe area for devices with notch/home indicator */
