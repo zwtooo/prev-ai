@@ -118,7 +118,22 @@ export default function ChatInterface() {
         body: JSON.stringify({ messages: apiMessages }),
       });
 
-      if (!response.ok || !response.body) throw new Error("Error");
+      if (!response.ok || !response.body) {
+        let code = "";
+        try {
+          code = (await response.json())?.code ?? "";
+        } catch {}
+        const msg =
+          code === "AI_NOT_CONFIGURED"
+            ? "El asistente de IA todavía no está configurado. Falta la clave de API (ANTHROPIC_API_KEY). Si eres el administrador, configúrala para activar el chat."
+            : "Lo siento, hubo un problema. Por favor inténtalo de nuevo.";
+        setMessages((prev) => [
+          ...prev,
+          { id: assistantId, role: "assistant", content: msg, timestamp: new Date() },
+        ]);
+        setLoading(false);
+        return;
+      }
 
       setMessages((prev) => [
         ...prev,

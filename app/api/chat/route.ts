@@ -1,8 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest, NextResponse } from "next/server";
 
-const client = new Anthropic();
-
 const SYSTEM_PROMPT = `Eres un asistente especializado en prevención de lesiones para trabajadores de oficina sedentarios. Tu nombre es "prev.ai".
 
 Tu rol:
@@ -34,12 +32,21 @@ IMPORTANTE: No reemplazas a un profesional de salud. Siempre recuerda al usuario
 
 export async function POST(request: NextRequest) {
   try {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      return NextResponse.json(
+        { error: "La IA no está configurada", code: "AI_NOT_CONFIGURED" },
+        { status: 503 }
+      );
+    }
+
     const { messages } = await request.json();
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: "Formato de mensajes inválido" }, { status: 400 });
     }
 
+    const client = new Anthropic({ apiKey });
     const stream = client.messages.stream({
       model: "claude-sonnet-4-6",
       max_tokens: 1024,
