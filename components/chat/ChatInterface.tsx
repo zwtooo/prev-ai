@@ -92,6 +92,15 @@ export default function ChatInterface() {
   const sendMessage = async (text: string) => {
     if (!text.trim() || loading || streamingId) return;
 
+    // Comandos rápidos: /limpiar, /clear o /borrar vacían la conversación.
+    const command = text.trim().toLowerCase();
+    if (command === "/limpiar" || command === "/clear" || command === "/borrar") {
+      setInput("");
+      if (textareaRef.current) textareaRef.current.style.height = "auto";
+      await resetChat();
+      return;
+    }
+
     const userMsg: Message = {
       id: nextId(),
       role: "user",
@@ -123,10 +132,19 @@ export default function ChatInterface() {
         try {
           code = (await response.json())?.code ?? "";
         } catch {}
+        const errorMessages: Record<string, string> = {
+          AI_NOT_CONFIGURED:
+            "El asistente de IA todavía no está configurado. Falta la clave de API (ANTHROPIC_API_KEY). Si eres el administrador, configúrala para activar el chat.",
+          AI_NO_CREDIT:
+            "El servicio de IA no tiene saldo disponible. El administrador debe cargar créditos de la API en console.anthropic.com → Billing para activar el chat.",
+          AI_INVALID_KEY:
+            "La clave de API de la IA no es válida. El administrador debe revisar la configuración (ANTHROPIC_API_KEY).",
+          AI_RATE_LIMIT:
+            "El asistente está recibiendo muchas solicitudes en este momento. Espera unos segundos e inténtalo de nuevo.",
+        };
         const msg =
-          code === "AI_NOT_CONFIGURED"
-            ? "El asistente de IA todavía no está configurado. Falta la clave de API (ANTHROPIC_API_KEY). Si eres el administrador, configúrala para activar el chat."
-            : "Lo siento, hubo un problema. Por favor inténtalo de nuevo.";
+          errorMessages[code] ??
+          "Lo siento, hubo un problema. Por favor inténtalo de nuevo.";
         setMessages((prev) => [
           ...prev,
           { id: assistantId, role: "assistant", content: msg, timestamp: new Date() },
@@ -223,6 +241,7 @@ export default function ChatInterface() {
         </div>
         <button
           onClick={resetChat}
+          title="Limpiar la conversación (también puedes escribir /limpiar)"
           className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors"
         >
           <RotateCcw size={13} />
@@ -356,7 +375,7 @@ export default function ChatInterface() {
         </form>
         <p className="text-gray-400 dark:text-gray-500 text-xs mt-2 text-center">
           prev.ai puede cometer errores. Consulta siempre a un profesional de salud para
-          diagnósticos.
+          diagnósticos. Escribe <span className="font-mono">/limpiar</span> para vaciar el chat.
         </p>
       </div>
     </div>

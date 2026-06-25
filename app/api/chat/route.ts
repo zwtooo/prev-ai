@@ -47,15 +47,24 @@ export async function POST(request: NextRequest) {
     }
 
     const client = new Anthropic({ apiKey });
-    const stream = client.messages.stream({
-      model: "claude-sonnet-4-6",
-      max_tokens: 1024,
-      system: SYSTEM_PROMPT,
-      messages: messages.map((m: { role: string; content: string }) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content,
-      })),
-    });
+
+    // Usamos stream:true con await: así los errores de autenticación o saldo
+    // se lanzan AQUÍ (antes de enviar bytes) y podemos devolver un código claro.
+    let stream;
+    try {
+      stream = await client.messages.create({
+        model: "claude-sonnet-4-6",
+        max_tokens: 1024,
+        system: SYSTEM_PROMPT,
+        stream: true,
+        messages: messages.map((m: { role: string; content: string }) => ({
+          role: m.role as "user" | "assistant",
+          content: m.content,
+        })),
+      });
+    } catch (err) {
+      return mapAnthropicError(err);
+    }
 
     const readable = new ReadableStream({
       async start(controller) {
@@ -89,4 +98,33 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
+}
+
+function mapAnthropicError(err: unknown) {
+  const status = err instanceof Anthropic.APIError ? err.status : undefined;
+  const message = err instanceof Error ? err.message.toLowerCase() : "";
+  console.error("Anthropic API error:", err);
+
+  if (status === 400 && message.includes("credit")) {
+    return NextResponse.json(
+      { error: "Sin saldo de API", code: "AI_NO_CREDIT" },
+      { status: 402 }
+    );
+  }
+  if (status === 401) {
+    return NextResponse.json(
+      { error: "API key inválida", code: "AI_INVALID_KEY" },
+      { status: 401 }
+    );
+  }
+  if (status === 429) {
+    return NextResponse.json(
+      { error: "Límite de uso alcanzado", code: "AI_RATE_LIMIT" },
+      { status: 429 }
+    );
+  }
+  return NextResponse.json(
+    { error: "Error al procesar la solicitud" },
+    { status: 500 }
+  );
 }

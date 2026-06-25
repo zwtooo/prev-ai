@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
-  LayoutDashboard, User, ClipboardList, Dumbbell, Activity,
-  BookOpen, MessageSquare, CalendarDays, FileText, Bot,
+  LayoutDashboard, User, Dumbbell, Activity,
+  BookOpen, MessageSquare, CalendarDays, Bot,
   LogOut, X, Leaf,
 } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
@@ -14,13 +14,11 @@ import ThemeToggle from "@/components/ThemeToggle";
 const navItems = [
   { href: "/", label: "Dashboard", icon: LayoutDashboard },
   { href: "/profile", label: "Mi perfil", icon: User },
-  { href: "/evaluaciones", label: "Evaluaciones", icon: ClipboardList },
   { href: "/routines", label: "Rutinas", icon: Dumbbell },
   { href: "/stats", label: "Seguimiento", icon: Activity },
   { href: "/educacion", label: "Educación", icon: BookOpen },
   { href: "/chat", label: "Mensajes", icon: MessageSquare },
   { href: "/reminders", label: "Calendario", icon: CalendarDays },
-  { href: "/reportes", label: "Reportes", icon: FileText },
 ];
 
 interface SidebarProps {
